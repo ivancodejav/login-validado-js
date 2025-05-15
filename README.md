@@ -1,6 +1,7 @@
 # Proyecto Login con Validación en JavaScript
 
-Este proyecto es un formulario de login que incluye validación de campos utilizando JavaScript puro. Está diseñado para validar correo electrónico, nombre, apellido, cédula y contraseña, mostrando mensajes de error en caso de datos inválidos. 
+Este proyecto es un formulario de login que incluye validación de campos utilizando JavaScript puro. Está diseñado para validar correo electrónico, nombre, apellido, cédula y contraseña, mostrando mensajes de error en caso de datos inválidos. <br>
+lo puedes ver desde https://ivancodejav.github.io/login-validado-js/
 
 ---
 
