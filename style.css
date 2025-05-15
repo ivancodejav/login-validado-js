@@ -1,6 +1,6 @@
 body{
 font-family: Arial, Helvetica, sans-serif;
-background-color: antiquewhite;
+background: linear-gradient(135deg, rgb(226, 164, 84), #e57373, #64b5f6);
 margin: 0;
 display: flex;
 justify-content: center;
@@ -59,19 +59,3 @@ margin-bottom: 10px;
     display: none;
 }
 
-#show-hide{
-
-position: relative;
-top: -10px;
-float: right;
-color: rgba(12, 12, 12, 0.219);
-cursor: pointer;
-border: 1px solid transparent;
-transition: all .5s ease;
-}
-#show-hide:hover{
-border-bottom:  1px solid rgb(0, 0, 0);
-color: rgb(0, 0, 0);
-
-
-}

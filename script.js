@@ -1,124 +1,93 @@
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('loginForm');
     const emailInput = document.getElementById('email');
+    const nombreInput = document.getElementById('nombre');
+    const apellidoInput = document.getElementById('apellido');
+    const cedulaInput = document.getElementById('cedula');
     const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('confirmPassword');
+
     const emailError = document.getElementById('emailError');
+    const nombreError = document.getElementById('nombreError');
+    const apellidoError = document.getElementById('apellidoError');
+    const cedulaError = document.getElementById('cedulaError');
     const passwordError = document.getElementById('passwordError');
-    const confirmPasswordError = document.getElementById('confirmPasswordError');
-    const showHideButtom = document.getElementById('show-hide')
+
+    const showHideButton = document.getElementById('show-hide');
 
     loginForm.addEventListener('submit', function (event) {
         event.preventDefault();
-        validateForm();
+        if (validateForm()) {
+            alert('Formulario válido. Enviar datos o procesar login.');
+            loginForm.reset();
+            clearAllErrors();
+        }
     });
 
-    emailInput.addEventListener('blur', function () {
-        validateEmail();
+    showHideButton.addEventListener('click', () => {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            showHideButton.textContent = 'Ocultar';
+        } else {
+            passwordInput.type = 'password';
+            showHideButton.textContent = 'Mostrar';
+        }
     });
-
-    emailInput.addEventListener('change', function () {
-        clearError(emailError);
-    });
-
-    passwordInput.addEventListener('change', function () {
-        clearError(passwordError);
-    });
-
-    confirmPasswordInput.addEventListener('change', function () {
-        clearError(confirmPasswordError);
-    });
-
-showHideButtom.addEventListener('click',function name() {
-    
-if (passwordInput.type == 'password') {
-    passwordInput.type = 'text'
-    confirmPasswordInput.type = 'text'
-}else{
-
-passwordInput.type = 'password'
-    confirmPasswordInput.type = 'password'
-
-}
-
-
-})
-
 
     function validateForm() {
-        const isValidEmail = validateEmail();
-        const isValidPassword = validatePassword();
-        const passwordMatch = validateConfirmPassword();
+        let valid = true;
 
-        if (isValidEmail && isValidPassword && passwordMatch) {
-            saveToLocalStorage()
-            alert('Has validado el ingreso');
-        }
-    }
-
-    function validateEmail() {
+        // Email
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const emailValue = emailInput.value.trim();
-
-        if (!emailRegex.test(emailValue)) {
+        if (!emailRegex.test(emailInput.value.trim())) {
             showError(emailError, 'Ingresa un email válido');
-            return false;
+            valid = false;
+        } else {
+            clearError(emailError);
         }
-        return true;
-    }
 
-    function validatePassword() {
-        const passwordValue = passwordInput.value.trim();
-
-        if (passwordValue.length < 6) {
-            showError(passwordError, 'Ingresa una contraseña de al menos 6 caracteres');
-            return false;
+        if (!/^[a-zA-ZÀ-ÿ\s]{2,20}$/.test(nombreInput.value.trim())) {
+            showError(nombreError, 'Nombre válido de 2 a 20 letras');
+            valid = false;
+        } else {
+            clearError(nombreError);
         }
-        return true;
-    }
 
-    function validateConfirmPassword() {
-        const passwordValue = passwordInput.value.trim();
-        const confirmPasswordValue = confirmPasswordInput.value.trim();
-
-        if (passwordValue !== confirmPasswordValue) {
-            showError(confirmPasswordError, 'Las contraseñas no coinciden');
-            return false;
+        if (!/^[a-zA-ZÀ-ÿ\s]{2,20}$/.test(apellidoInput.value.trim())) {
+            showError(apellidoError, 'Apellido válido de 2 a 20 letras');
+            valid = false;
+        } else {
+            clearError(apellidoError);
         }
-        return true;
+
+        if (!/^[a-zA-Z0-9]{5,15}$/.test(cedulaInput.value.trim())) {
+            showError(cedulaError, 'Cédula válida de 5 a 15 caracteres (números o letras)');
+            valid = false;
+        } else {
+            clearError(cedulaError);
+        }
+
+        // Password mínimo 6 caracteres
+        if (passwordInput.value.trim().length < 6) {
+            showError(passwordError, 'Contraseña mínimo 6 caracteres');
+            valid = false;
+        } else {
+            clearError(passwordError);
+        }
+
+        return valid;
     }
 
-    function showError(errorElement, message) {
-        errorElement.innerHTML = message;
-        errorElement.style.display = 'block';
+    function showError(element, message) {
+        element.textContent = message;
+        element.style.display = 'block';
     }
 
-    function clearError(errorElement) {
-        errorElement.innerHTML = '';
-        errorElement.style.display = 'none';
+    function clearError(element) {
+        element.textContent = '';
+        element.style.display = 'none';
     }
 
-function saveToLocalStorage() {
-
-    const emailValue = emailInput.value.trim();
-    localStorage.setItem('email',emailValue)
-    const body = bodyBuilderJSON()
-    console.log(body)
-
-    
-}
-
-function bodyBuilderJSON() {
-    return{
-        "email": emailInput.value,
-        "password": passwordInput.value
+    function clearAllErrors() {
+        [emailError, nombreError, apellidoError, cedulaError, passwordError].forEach(clearError);
     }
-}
-
-
-
-
-
-
-
 });
